@@ -64,7 +64,7 @@ A peripheral type is created with the following syntax:
 ///<description>
 ...
 ///<description>
-periphreal <identifier> <"is peripheral_accessed"?> {
+periphreal <identifier> {
     <register[0]>,
     <register[1]>,
     ...
@@ -74,10 +74,8 @@ periphreal <identifier> <"is peripheral_accessed"?> {
 
 | Element            | Type                     |  Condition     | Description  |
 | ------------------ | ------------------------ | -------------- | ------------ |
-| identifier         | String                   | required       |              |
+| ident              | String                   | required       |              |
 | description        | String                   | optional       |              |
-|||||
-| peripheral_accessed| bool                     | required       | A memory mapped (internal) peripheral will generate a struct with the correct memory layout. Set to true if access code should be generated instead (in case of SPI, I2C, etc access) |
 |||||
 | register           | [RegisterInstance]       | 0+             |              |
 
@@ -89,7 +87,7 @@ A register instance is defined as
 
 | Element            | Type                     |  Condition     | Description  |
 | ------------------ | ------------------------ | -------------- | ------------ |
-| name               | String                   | required       | The full name of the register instance |
+| ident              | String                   | required       | The full name of the register instance |
 | register           | String                   | required       | The identifier of the register that is being istanciated |
 | offset             | uint                     | required       | Offset from the peripheral base address |
 
@@ -109,53 +107,50 @@ peripheral FLEX_CAN {
 ## Register Generation
 This section defines how peripherals are specified in RACR.
 
-### Register
+### Register Definition
 A reigster type is created by the following syntax:
 ``` rust
 /// <description>
 /// <description>
 ...
 /// <description>
-<access> register[<size>] <identifier> (= <reset_value>)? <"is overlapping"?>  {
-    ///<field[0].description>
+<access> register[<size>] <identifier> (= <reset_value>)? <": overlapping"?>  {
     <field[0]>,
-    ///<field[1].description>
     <field[1]>,
     ...
-    ///<field[M].description>
     <field[M]>,
 }
 ```
 
 | Element            | Type                     |  Condition     | Description  |
 | ------------------ | ------------------------ | -------------- | ------------ |
-| identifier         | String                   | required       |              |
+| ident              | String                   | required       |              |
 | description        | String                   | optional       |              |
 |||||
 | size               | uint                     | required       | Length in bits of the register representation, used for detecting out of bound fields | 
-| array_length       | uint                     | optional       | If specified, this register will be made into several identical registers |
 | overlapping        | bool                     | required       | If true, it allows other registers to overlap with this even if they both are read or both are write |
 |||||
-| access             | [Access]                   | required       | `ReadOnly`, `WriteOnly` or `ReadWrite`. A `WriteOnly`(`ReadOnly`) Register is allowed to overlap with `ReadOnly`(`WriteOnly`) registers even if overlapping is `false` |
+| access             | [Access]                 | required       | `ReadOnly`, `WriteOnly` or `ReadWrite`. A `WriteOnly`(`ReadOnly`) Register is allowed to overlap with `ReadOnly`(`WriteOnly`) registers even if overlapping is `false` |
 | reset_value        | uint                     | optional       | If no reset value is specified it will be assumed that the reset value is undefined |
 |||||
-| fields             | [Field]                  | 0+             |              |
+| fields             | [FieldInstance]          | 0+             |              |
 
-### Field
+### Field Instance
 A field is instanciated with:
 ``` rust
-<access> name[<bit_start>..<bit_end>]
+///<description>
+<access> <ident>[<bit_start>..<bit_end>]
 ```
 
 | Element            | Type                     |  Condition     | Description  |
 | ------------------ | ------------------------ | -------------- | ------------ |
-| name               | String                   | required       |              |
+| ident              | String                   | required       |              |
 | description        | String                   | optional       |              |
 |||||
 | bit_start          | uint                     | required       | The starting bit of this field |
 | bit_end            | uint                     | required       | Inclusive end of this field |
 |||||
-| access             | [Access]                   | required       | `ReadOnly`, `WriteOnly` or `ReadWrite`. A `WriteOnly`(`ReadOnly`) field is allowed to overlap with `ReadOnly`(`WriteOnly`) fields.
+| access             | [Access]                 | required       | `ReadOnly`, `WriteOnly` or `ReadWrite`. A `WriteOnly`(`ReadOnly`) field is allowed to overlap with `ReadOnly`(`WriteOnly`) fields.
 
 ## Common
 ### Access
