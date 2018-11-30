@@ -1,3 +1,5 @@
+mod module;
+mod item;
 mod used;
 
 mod unit;
@@ -7,6 +9,9 @@ mod field;
 
 mod ident;
 mod access;
+
+pub use self::item::Item;
+pub use self::module::Module;
 
 pub use self::used::Use;
 pub use self::used::UseTree;

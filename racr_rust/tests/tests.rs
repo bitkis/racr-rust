@@ -149,3 +149,48 @@ fn display_used() {
         desired_string
     )
 }
+
+#[test]
+fn display_mod_without_content() {
+    let module = Module {
+        ident: "foo".into(),
+        content: None,
+    };
+        
+    let mut display_string = format!("{}", module);
+
+    let mut desired_string = String::from("mod foo;");
+
+    // Strip whitespaces and compare
+    display_string.retain(|c| c!= '\n' && c != ' ');
+    desired_string.retain(|c| c!= '\n' && c != ' ');
+
+    assert_eq!(
+        display_string,
+        desired_string
+    )
+}
+
+#[test]
+fn display_mod_with_content() {
+    let module = Module {
+        ident: "foo".into(),
+        content: Some(vec![
+            Item::Use(Use{tree: UseName{ident: "bar".into()}.into()}),
+            Item::Use(Use{tree: UseName{ident: "baz".into()}.into()}),
+        ]),
+    };
+        
+    let mut display_string = format!("{}", module);
+
+    let mut desired_string = String::from("mod foo { use bar; use baz; }");
+
+    // Strip whitespaces and compare
+    display_string.retain(|c| c!= '\n' && c != ' ');
+    desired_string.retain(|c| c!= '\n' && c != ' ');
+
+    assert_eq!(
+        display_string,
+        desired_string
+    )
+}
