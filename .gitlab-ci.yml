@@ -2,5 +2,5 @@ rust-test:
   image: "rust:latest"
   script:
     - rustup default beta
-    - cd racr_rust
     - cargo test
+    
