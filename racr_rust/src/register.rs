@@ -11,7 +11,7 @@ pub struct RegisterDefinition {
     pub description: Option<String>,
 
     pub size: usize,
-    pub reset_value: Option<usize>,
+    pub reset_value: Option<u128>,
 
     pub overlapping: bool,
 
