@@ -19,11 +19,11 @@ pub enum Item {
 impl fmt::Display for Item {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Item::Use(x) => writeln!(f, "{}", x),
-            Item::Mod(x) => writeln!(f, "{}", x),
-            Item::Device(x) => writeln!(f, "{}", x),
-            Item::Peripheral(x) => writeln!(f, "{}", x),
-            Item::Register(x) => writeln!(f, "{}", x),
+            Item::Use(x) => write!(f, "{}", x),
+            Item::Mod(x) => write!(f, "{}", x),
+            Item::Device(x) => write!(f, "{}", x),
+            Item::Peripheral(x) => write!(f, "{}", x),
+            Item::Register(x) => write!(f, "{}", x),
         }
     }
 }

@@ -15,7 +15,7 @@ impl fmt::Display for Module {
             for item in content {
                 writeln!(f, "{}", item)?;
             }
-            writeln!(f, "}}")
+            write!(f, "}}")
         } else {
             write!(f, "mod {};", self.ident)
         }

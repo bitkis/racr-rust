@@ -11,6 +11,6 @@ impl fmt::Display for FileContent {
         for item in self.content.iter() {
             writeln!(f, "{}", item)?;
         }
-        Ok(())
+        writeln!(f, "") // end on newline
     }
 }
