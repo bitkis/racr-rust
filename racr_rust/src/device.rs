@@ -6,7 +6,7 @@ use crate::access::Access;
 use crate::peripheral::PeripheralInstance;
 
 #[derive(Debug, PartialEq, Clone)]
-pub struct UnitDefinition {
+pub struct DeviceDefinition {
     pub ident: Ident,
     pub description: Option<String>,
 
@@ -14,7 +14,7 @@ pub struct UnitDefinition {
 }
 
 
-impl fmt::Display for UnitDefinition {
+impl fmt::Display for DeviceDefinition {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         // Print description if it exists
         if let Some(ref description) = self.description {

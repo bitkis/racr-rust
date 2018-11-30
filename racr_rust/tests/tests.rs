@@ -83,8 +83,8 @@ peripheral PeripheralName {
 }
 
 #[test]
-fn display_unit() {
-    let reg = UnitDefinition {
+fn display_device() {
+    let device = DeviceDefinition {
         ident: Ident::from("UnitName"),
         description: Some(String::from(" description")),
 
@@ -96,7 +96,7 @@ fn display_unit() {
         ],
     };
 
-    let mut display_string = format!("{}", reg);
+    let mut display_string = format!("{}", device);
 
     let mut desired_string = String::from(
         "/// description

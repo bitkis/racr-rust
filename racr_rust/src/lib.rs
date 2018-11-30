@@ -3,7 +3,7 @@ mod module;
 mod item;
 mod used;
 
-mod unit;
+mod device;
 mod peripheral;
 mod register;
 mod field;
@@ -21,7 +21,7 @@ pub use self::used::UseTree;
 pub use self::used::UseName;
 pub use self::used::UsePath;
 
-pub use self::unit::UnitDefinition;
+pub use self::device::DeviceDefinition;
 
 pub use self::peripheral::PeripheralDefinition;
 pub use self::peripheral::PeripheralInstance;

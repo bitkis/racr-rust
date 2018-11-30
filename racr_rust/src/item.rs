@@ -3,7 +3,7 @@ use std::fmt;
 use crate::{
     Use,
     Module,
-    UnitDefinition,
+    DeviceDefinition,
     PeripheralDefinition,
     RegisterDefinition,
 };
@@ -11,7 +11,7 @@ use crate::{
 pub enum Item {
     Use(Use),
     Mod(Module),
-    Unit(UnitDefinition),
+    Device(DeviceDefinition),
     Peripheral(PeripheralDefinition),
     Register(RegisterDefinition),
 }
@@ -21,7 +21,7 @@ impl fmt::Display for Item {
         match self {
             Item::Use(x) => writeln!(f, "{}", x),
             Item::Mod(x) => writeln!(f, "{}", x),
-            Item::Unit(x) => writeln!(f, "{}", x),
+            Item::Device(x) => writeln!(f, "{}", x),
             Item::Peripheral(x) => writeln!(f, "{}", x),
             Item::Register(x) => writeln!(f, "{}", x),
         }
@@ -40,9 +40,9 @@ impl From<Module> for Item {
     }
 }
 
-impl From<UnitDefinition> for Item {
-    fn from(item: UnitDefinition) -> Item {
-        Item::Unit(item)
+impl From<DeviceDefinition> for Item {
+    fn from(item: DeviceDefinition) -> Item {
+        Item::Device(item)
     }
 }
 
