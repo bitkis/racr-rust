@@ -1,7 +1,6 @@
 use std::fmt;
 
 use crate::ident::Ident;
-use crate::access::Access;
 
 use crate::peripheral::PeripheralInstance;
 
