@@ -118,3 +118,34 @@ peripheral UnitName {
         desired_string
     )
 }
+
+#[test]
+fn display_used() {
+
+    let used = Use {
+        tree: UsePath {
+            ident: "foo".into(),
+            tree: Box::new(
+                UsePath{
+                    ident: "bar".into(),
+                    tree: Box::new(
+                        UseName{ident: "Baz".into()}.into()
+                    )
+                }.into()
+            )
+        }.into()
+    };
+        
+    let mut display_string = format!("{}", used);
+
+    let mut desired_string = String::from("use foo::bar::Baz;");
+
+    // Strip whitespaces and compare
+    display_string.retain(|c| c!= '\n' && c != ' ');
+    desired_string.retain(|c| c!= '\n' && c != ' ');
+
+    assert_eq!(
+        display_string,
+        desired_string
+    )
+}

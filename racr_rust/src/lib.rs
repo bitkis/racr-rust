@@ -1,3 +1,5 @@
+mod used;
+
 mod unit;
 mod peripheral;
 mod register;
@@ -5,6 +7,11 @@ mod field;
 
 mod ident;
 mod access;
+
+pub use self::used::Use;
+pub use self::used::UseTree;
+pub use self::used::UseName;
+pub use self::used::UsePath;
 
 pub use self::unit::UnitDefinition;
 
