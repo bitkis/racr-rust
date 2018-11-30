@@ -1,3 +1,4 @@
+mod file;
 mod module;
 mod item;
 mod used;
@@ -9,6 +10,8 @@ mod field;
 
 mod ident;
 mod access;
+
+pub use self::file::FileContent;
 
 pub use self::item::Item;
 pub use self::module::Module;

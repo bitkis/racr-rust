@@ -194,3 +194,27 @@ fn display_mod_with_content() {
         desired_string
     )
 }
+
+#[test]
+fn display_file() {
+    let file_content = FileContent {
+        content: vec![
+            Item::Use(Use{tree: UseName{ident: "foo".into()}.into()}),
+            Item::Use(Use{tree: UseName{ident: "bar".into()}.into()}),
+            Item::Use(Use{tree: UseName{ident: "baz".into()}.into()}),
+        ],
+    };
+        
+    let mut display_string = format!("{}", file_content);
+
+    let mut desired_string = String::from("use foo; use bar; use baz;");
+
+    // Strip whitespaces and compare
+    display_string.retain(|c| c!= '\n' && c != ' ');
+    desired_string.retain(|c| c!= '\n' && c != ' ');
+
+    assert_eq!(
+        display_string,
+        desired_string
+    )
+}
