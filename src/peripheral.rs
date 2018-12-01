@@ -1,6 +1,7 @@
 use std::fmt;
 
 use crate::ident::Ident;
+use crate::path::Path;
 
 use crate::register::RegisterInstance;
 
@@ -15,7 +16,7 @@ pub struct PeripheralDefinition {
 #[derive(Debug, PartialEq, Clone)]
 pub struct PeripheralInstance {
     pub ident: Ident,
-    pub peripheral: Ident,
+    pub path: Path,
     pub address: usize,
 }
 
@@ -30,7 +31,7 @@ impl fmt::Display for PeripheralDefinition {
         writeln!(f, " {{")?;
 
         for reg in self.registers.iter() {
-            writeln!(f, "{}:  {} @ {:#x},", reg.ident, reg.reg, reg.offset)?;
+            writeln!(f, "{}:  {} @ {:#x},", reg.ident, reg.path, reg.offset)?;
         }
         writeln!(f, "}}")
     }

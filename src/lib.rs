@@ -9,6 +9,7 @@ mod register;
 mod field;
 
 mod ident;
+mod path;
 mod access;
 
 pub use self::file::FileContent;
@@ -32,4 +33,5 @@ pub use self::register::RegisterInstance;
 pub use self::field::FieldInstance;
 
 pub use self::ident::Ident;
+pub use self::path::Path;
 pub use self::access::Access;

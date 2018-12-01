@@ -52,10 +52,10 @@ fn display_peripheral() {
         description: Some(String::from(" description")),
 
         registers: vec![
-            RegisterInstance{ident: Ident::from("reg0"), reg: Ident::from("RegisterName"), offset: 0x0},
-            RegisterInstance{ident: Ident::from("reg1"), reg: Ident::from("RegisterName"), offset: 0x4},
-            RegisterInstance{ident: Ident::from("reg2"), reg: Ident::from("RegisterName"), offset: 0x8},
-            RegisterInstance{ident: Ident::from("reg3"), reg: Ident::from("RegisterName"), offset: 0xc},
+            RegisterInstance{ident: Ident::from("reg0"), path: Ident::from("RegisterName").into(), offset: 0x0},
+            RegisterInstance{ident: Ident::from("reg1"), path: Ident::from("RegisterName").into(), offset: 0x4},
+            RegisterInstance{ident: Ident::from("reg2"), path: Ident::from("RegisterName").into(), offset: 0x8},
+            RegisterInstance{ident: Ident::from("reg3"), path: Ident::from("RegisterName").into(), offset: 0xc},
         ],
     };
 
@@ -89,10 +89,10 @@ fn display_device() {
         description: Some(String::from(" description")),
 
         peripherals: vec![
-            PeripheralInstance{ident: Ident::from("peripheral0"), peripheral: Ident::from("PeripheralName"), address: 0x4000_0000},
-            PeripheralInstance{ident: Ident::from("peripheral1"), peripheral: Ident::from("PeripheralName"), address: 0x4000_2000},
-            PeripheralInstance{ident: Ident::from("peripheral2"), peripheral: Ident::from("PeripheralName"), address: 0x4000_4000},
-            PeripheralInstance{ident: Ident::from("peripheral3"), peripheral: Ident::from("PeripheralName"), address: 0x4000_8000},
+            PeripheralInstance{ident: Ident::from("peripheral0"), path: Ident::from("PeripheralName").into(), address: 0x4000_0000},
+            PeripheralInstance{ident: Ident::from("peripheral1"), path: Ident::from("PeripheralName").into(), address: 0x4000_2000},
+            PeripheralInstance{ident: Ident::from("peripheral2"), path: Ident::from("PeripheralName").into(), address: 0x4000_4000},
+            PeripheralInstance{ident: Ident::from("peripheral3"), path: Ident::from("PeripheralName").into(), address: 0x4000_8000},
         ],
     };
 
@@ -213,6 +213,27 @@ fn display_file() {
     display_string.retain(|c| c!= '\n' && c != ' ');
     desired_string.retain(|c| c!= '\n' && c != ' ');
 
+    assert_eq!(
+        display_string,
+        desired_string
+    )
+}
+
+#[test]
+fn display_path() {
+    let path = Path {
+        segments: vec![
+            Ident::from("foo"),
+            Ident::from("bar"),
+            Ident::from("baz"),
+        ],
+    };
+
+    let display_string = format!("{}", path);
+
+    let desired_string = String::from("foo::bar::baz");
+
+    // Compare
     assert_eq!(
         display_string,
         desired_string

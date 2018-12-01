@@ -1,6 +1,7 @@
 use std::fmt;
 
 use crate::ident::Ident;
+use crate::path::Path;
 use crate::access::Access;
 use crate::field::FieldInstance;
 
@@ -21,7 +22,7 @@ pub struct RegisterDefinition {
 #[derive(Debug, PartialEq, Clone)]
 pub struct RegisterInstance {
     pub ident: Ident,
-    pub reg: Ident,
+    pub path: Path,
     pub offset: usize,
 }
 

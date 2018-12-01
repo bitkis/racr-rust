@@ -24,7 +24,7 @@ impl fmt::Display for DeviceDefinition {
         writeln!(f, " {{")?;
 
         for per in self.peripherals.iter() {
-            writeln!(f, "{}:  {} @ {:#x},", per.ident, per.peripheral, per.address)?;
+            writeln!(f, "{}:  {} @ {:#x},", per.ident, per.path, per.address)?;
         }
         writeln!(f, "}}")
     }
