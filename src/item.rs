@@ -28,6 +28,58 @@ impl fmt::Display for Item {
     }
 }
 
+impl Item {
+    pub fn is_use(&self) -> bool {
+        if let Item::Use(_) = self {
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn is_mod(&self) -> bool {
+        if let Item::Mod(_) = self {
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn is_device(&self) -> bool {
+        if let Item::Device(_) = self {
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn is_peripheral(&self) -> bool {
+        if let Item::Peripheral(_) = self {
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn is_register(&self) -> bool {
+        if let Item::Register(_) = self {
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn is_definition(&self) -> bool {
+        match self {
+            Item::Use(_) => false,
+            Item::Mod(_) => false,
+            Item::Device(_) => true,
+            Item::Peripheral(_) => true,
+            Item::Register(_) => true,
+        }
+    }
+}
+
 impl From<Use> for Item {
     fn from(item: Use) -> Item {
         Item::Use(item)
