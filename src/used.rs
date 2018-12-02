@@ -2,19 +2,23 @@ use std::fmt;
 
 use crate::ident::Ident;
 
+#[derive(Debug, PartialEq, Clone)]
 pub struct Use {
     pub tree: UseTree,
 }
 
+#[derive(Debug, PartialEq, Clone)]
 pub enum UseTree {
     Name(UseName),
     Path(UsePath),
 }
 
+#[derive(Debug, PartialEq, Clone)]
 pub struct UseName {
     pub ident: Ident,
 }
 
+#[derive(Debug, PartialEq, Clone)]
 pub struct UsePath {
     pub ident: Ident,
     pub tree: Box<UseTree>,

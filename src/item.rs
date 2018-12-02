@@ -8,6 +8,7 @@ use crate::{
     RegisterDefinition,
 };
 
+#[derive(Debug, PartialEq, Clone)]
 pub enum Item {
     Use(Use),
     Mod(Module),

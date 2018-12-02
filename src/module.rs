@@ -3,6 +3,7 @@ use std::fmt;
 use crate::item::Item;
 use crate::ident::Ident;
 
+#[derive(Debug, PartialEq, Clone)]
 pub struct Module {
     pub ident: Ident,
     pub content: Option<Vec<Item>>,
