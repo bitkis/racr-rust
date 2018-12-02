@@ -19,8 +19,6 @@ pub use self::module::Module;
 
 pub use self::used::Use;
 pub use self::used::UseTree;
-pub use self::used::UseName;
-pub use self::used::UsePath;
 
 pub use self::device::DeviceDefinition;
 

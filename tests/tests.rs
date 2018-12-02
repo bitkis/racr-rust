@@ -123,17 +123,15 @@ peripheral UnitName {
 fn display_used() {
 
     let used = Use {
-        tree: UsePath {
-            ident: "foo".into(),
-            tree: Box::new(
-                UsePath{
-                    ident: "bar".into(),
-                    tree: Box::new(
-                        UseName{ident: "Baz".into()}.into()
-                    )
-                }.into()
+        tree: UseTree::Path {
+            path_segment: "foo".into(),
+            sub_tree: Box::new(
+                UseTree::Path {
+                    path_segment: "bar".into(),
+                    sub_tree: Box::new( UseTree::Ident("Baz".into()) )
+                }
             )
-        }.into()
+        }
     };
         
     let mut display_string = format!("{}", used);
@@ -176,8 +174,8 @@ fn display_mod_with_content() {
     let module = Module {
         ident: "foo".into(),
         content: Some(vec![
-            Item::Use(Use{tree: UseName{ident: "bar".into()}.into()}),
-            Item::Use(Use{tree: UseName{ident: "baz".into()}.into()}),
+            Item::Use(Use{tree: UseTree::Ident("bar".into())}),
+            Item::Use(Use{tree: UseTree::Ident("baz".into())}),
         ]),
     };
         
@@ -199,9 +197,9 @@ fn display_mod_with_content() {
 fn display_file() {
     let file_content = FileContent {
         content: vec![
-            Item::Use(Use{tree: UseName{ident: "foo".into()}.into()}),
-            Item::Use(Use{tree: UseName{ident: "bar".into()}.into()}),
-            Item::Use(Use{tree: UseName{ident: "baz".into()}.into()}),
+            Item::Use(Use{tree: UseTree::Ident("foo".into())}),
+            Item::Use(Use{tree: UseTree::Ident("bar".into())}),
+            Item::Use(Use{tree: UseTree::Ident("baz".into())}),
         ],
     };
         
