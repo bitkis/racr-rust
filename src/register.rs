@@ -14,8 +14,6 @@ pub struct RegisterDefinition {
     pub size: usize,
     pub reset_value: Option<u128>,
 
-    pub overlapping: bool,
-
     pub fields: Vec<FieldInstance>,
 }
 
@@ -37,11 +35,8 @@ impl fmt::Display for RegisterDefinition {
         if let Some(reset_value) = self.reset_value {
             write!(f, " = {:#x}", reset_value)?;
         }
-        if self.overlapping {
-            write!(f, " : overlapping")?;
-        }
-        writeln!(f, " {{")?;
 
+        writeln!(f, " {{")?;
         for field in self.fields.iter() {
             if let Some(ref description) = field.description {
                 writeln!(f, "///{}", description)?;

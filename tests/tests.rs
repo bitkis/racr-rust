@@ -12,8 +12,6 @@ fn display_register() {
         size: 32,
         reset_value: Some(0),
 
-        overlapping: false,
-
         fields: vec![
             FieldInstance{ident: Ident::from("field0"), description: None, bit_start: 0, bit_end: 7, access: Some(Access::ReadWrite)},
             FieldInstance{ident: Ident::from("field1"), description: None, bit_start: 8, bit_end: 15, access: Some(Access::ReadOnly)},
