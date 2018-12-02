@@ -15,10 +15,10 @@ fn display_register() {
         overlapping: false,
 
         fields: vec![
-            FieldInstance{ident: Ident::from("field0"), description: None, bit_start: 0, bit_end: 7, access: Access::ReadWrite},
-            FieldInstance{ident: Ident::from("field1"), description: None, bit_start: 8, bit_end: 15, access: Access::ReadWrite},
-            FieldInstance{ident: Ident::from("field2"), description: None, bit_start: 16, bit_end: 23, access: Access::ReadWrite},
-            FieldInstance{ident: Ident::from("field3"), description: None, bit_start: 24, bit_end: 31, access: Access::ReadWrite},
+            FieldInstance{ident: Ident::from("field0"), description: None, bit_start: 0, bit_end: 7, access: Some(Access::ReadWrite)},
+            FieldInstance{ident: Ident::from("field1"), description: None, bit_start: 8, bit_end: 15, access: Some(Access::ReadOnly)},
+            FieldInstance{ident: Ident::from("field2"), description: None, bit_start: 16, bit_end: 23, access: Some(Access::WriteOnly)},
+            FieldInstance{ident: Ident::from("field3"), description: None, bit_start: 24, bit_end: 31, access: None},
         ],
     };
 
@@ -28,9 +28,9 @@ fn display_register() {
         "/// description
 ReadWrite register[32] RegisterName = 0x0 {
     ReadWrite field0[0..7],
-    ReadWrite field1[8..15],
-    ReadWrite field2[16..23],
-    ReadWrite field3[24..31],
+    ReadOnly field1[8..15],
+    WriteOnly field2[16..23],
+    field3[24..31],
 }"
     );
 

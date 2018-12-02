@@ -7,5 +7,5 @@ pub struct FieldInstance {
     pub description: Option<String>,
     pub bit_start: usize,
     pub bit_end: usize,
-    pub access: Access,
+    pub access: Option<Access>,
 }

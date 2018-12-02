@@ -46,7 +46,10 @@ impl fmt::Display for RegisterDefinition {
             if let Some(ref description) = field.description {
                 writeln!(f, "///{}", description)?;
             }
-            writeln!(f, "{}  {}[{}..{}],", field.access, field.ident, field.bit_start, field.bit_end)?;
+            if let Some(ref access) = field.access {
+                write!(f, "{} ", access)?;
+            }
+            writeln!(f, "{}[{}..{}],", field.ident, field.bit_start, field.bit_end)?;
         }
         writeln!(f, "}}")
     }
