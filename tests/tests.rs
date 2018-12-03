@@ -50,10 +50,17 @@ fn display_peripheral() {
         description: Some(String::from(" description")),
 
         registers: vec![
-            RegisterInstance{ident: Ident::from("reg0"), path: Ident::from("RegisterName").into(), offset: 0x0},
-            RegisterInstance{ident: Ident::from("reg1"), path: Ident::from("RegisterName").into(), offset: 0x4},
-            RegisterInstance{ident: Ident::from("reg2"), path: Ident::from("RegisterName").into(), offset: 0x8},
-            RegisterInstance{ident: Ident::from("reg3"), path: Ident::from("RegisterName").into(), offset: 0xc},
+            RegisterSlot::Single{instance: RegisterInstance{ident: Ident::from("reg0"), ty: RegisterType::Single{path: Ident::from("RegisterName").into()}}, offset: 0x0},
+            RegisterSlot::Single{instance: RegisterInstance{ident: Ident::from("reg1"), ty: RegisterType::Single{path: Ident::from("RegisterName").into()}}, offset: 0x4},
+            RegisterSlot::Single{instance: RegisterInstance{ident: Ident::from("reg2"), ty: RegisterType::Single{path: Ident::from("RegisterName").into()}}, offset: 0x8},
+            RegisterSlot::Single{instance: RegisterInstance{ident: Ident::from("reg3"), ty: RegisterType::Single{path: Ident::from("RegisterName").into()}}, offset: 0xc},
+            RegisterSlot::Overloaded{alternatives: vec![
+                    RegisterInstance{ident: Ident::from("reg4a"), ty: RegisterType::Single{path: Ident::from("A").into()}},
+                    RegisterInstance{ident: Ident::from("reg4b"), ty: RegisterType::Single{path: Ident::from("B").into()}},
+                    RegisterInstance{ident: Ident::from("reg4c"), ty: RegisterType::Single{path: Ident::from("C").into()}},
+                ], offset: 0x10
+            },
+            RegisterSlot::Single{instance: RegisterInstance{ident: Ident::from("reg5"), ty: RegisterType::Array{path: Ident::from("RegisterName").into(), size: 3}}, offset: 0x14},
         ],
     };
 
@@ -62,10 +69,12 @@ fn display_peripheral() {
     let mut desired_string = String::from(
         "/// description
 peripheral PeripheralName {
-    reg0: RegisterName @ 0x0,
-    reg1: RegisterName @ 0x4,
-    reg2: RegisterName @ 0x8,
-    reg3: RegisterName @ 0xc,
+    reg0: RegisterName @ 0x0,
+    reg1: RegisterName @ 0x4,
+    reg2: RegisterName @ 0x8,
+    reg3: RegisterName @ 0xc,
+    (reg4a: A | reg4b: B | reg4c: C) @ 0x10,
+    reg5: [RegisterName; 3]@ 0x14,
 }"
     );
 
@@ -87,7 +96,7 @@ fn display_device() {
         description: Some(String::from(" description")),
 
         peripherals: vec![
-            PeripheralInstance{ident: Ident::from("peripheral0"), path: Ident::from("PeripheralName").into(), address: 0x4000_0000},
+            PeripheralInstance{ident: Ident::from("peripheral0"), path: Ident::from("PeripheralName").into(), address: 0x4000_0000,},
             PeripheralInstance{ident: Ident::from("peripheral1"), path: Ident::from("PeripheralName").into(), address: 0x4000_2000},
             PeripheralInstance{ident: Ident::from("peripheral2"), path: Ident::from("PeripheralName").into(), address: 0x4000_4000},
             PeripheralInstance{ident: Ident::from("peripheral3"), path: Ident::from("PeripheralName").into(), address: 0x4000_8000},

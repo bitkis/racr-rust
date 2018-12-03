@@ -26,7 +26,9 @@ pub use self::peripheral::PeripheralDefinition;
 pub use self::peripheral::PeripheralInstance;
 
 pub use self::register::RegisterDefinition;
+pub use self::register::RegisterSlot;
 pub use self::register::RegisterInstance;
+pub use self::register::RegisterType;
 
 pub use self::field::FieldInstance;
 

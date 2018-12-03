@@ -3,14 +3,14 @@ use std::fmt;
 use crate::ident::Ident;
 use crate::path::Path;
 
-use crate::register::RegisterInstance;
+use crate::register::RegisterSlot;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct PeripheralDefinition {
     pub ident: Ident,
     pub description: Option<String>,
 
-    pub registers: Vec<RegisterInstance>,
+    pub registers: Vec<RegisterSlot>,
 }
 
 #[derive(Debug, PartialEq, Clone)]
@@ -31,7 +31,7 @@ impl fmt::Display for PeripheralDefinition {
         writeln!(f, " {{")?;
 
         for reg in self.registers.iter() {
-            writeln!(f, "{}:  {} @ {:#x},", reg.ident, reg.path, reg.offset)?;
+            writeln!(f, "{},", reg)?;
         }
         writeln!(f, "}}")
     }
