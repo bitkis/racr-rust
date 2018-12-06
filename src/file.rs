@@ -2,6 +2,7 @@ use std::fmt;
 
 use crate::item::Item;
 
+#[derive(Debug, PartialEq, Clone)]
 pub struct FileContent {
     pub content: Vec<Item>,
 }
