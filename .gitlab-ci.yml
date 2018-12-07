@@ -1,6 +1,6 @@
 rust-test:
   image: "rust:latest"
   script:
-    - rustup default beta
+    - rustup default stable
     - cargo test
     
