@@ -7,7 +7,7 @@ use crate::peripheral::PeripheralInstance;
 #[derive(Debug, PartialEq, Clone)]
 pub struct DeviceDefinition {
     pub ident: Ident,
-    pub description: Option<String>,
+    pub documentation: Option<String>,
 
     pub peripherals: Vec<PeripheralInstance>,
 }
@@ -15,9 +15,9 @@ pub struct DeviceDefinition {
 
 impl fmt::Display for DeviceDefinition {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // Print description if it exists
-        if let Some(ref description) = self.description {
-            writeln!(f, "///{}", description)?;
+        // Print documentation if it exists
+        if let Some(ref documentation) = self.documentation {
+            writeln!(f, "#[doc = \"{}\"]", documentation)?;
         }
 
         write!(f, "peripheral {}", self.ident)?;

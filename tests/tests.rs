@@ -7,23 +7,23 @@ fn display_register() {
     let reg = RegisterDefinition {
         access: Access::ReadWrite,
         ident: Ident::from("RegisterName"),
-        description: Some(String::from(" description")),
+        documentation: Some(String::from(" documentation")),
 
         size: 32,
         reset_value: Some(0),
 
         fields: vec![
-            FieldInstance{ident: Ident::from("field0"), description: None, bit_start: 0, bit_end: 7, access: Some(Access::ReadWrite)},
-            FieldInstance{ident: Ident::from("field1"), description: None, bit_start: 8, bit_end: 15, access: Some(Access::ReadOnly)},
-            FieldInstance{ident: Ident::from("field2"), description: None, bit_start: 16, bit_end: 23, access: Some(Access::WriteOnly)},
-            FieldInstance{ident: Ident::from("field3"), description: None, bit_start: 24, bit_end: 31, access: None},
+            FieldInstance{ident: Ident::from("field0"), documentation: None, bit_start: 0, bit_end: 7, access: Some(Access::ReadWrite)},
+            FieldInstance{ident: Ident::from("field1"), documentation: None, bit_start: 8, bit_end: 15, access: Some(Access::ReadOnly)},
+            FieldInstance{ident: Ident::from("field2"), documentation: None, bit_start: 16, bit_end: 23, access: Some(Access::WriteOnly)},
+            FieldInstance{ident: Ident::from("field3"), documentation: None, bit_start: 24, bit_end: 31, access: None},
         ],
     };
 
     let mut display_string = format!("{}", reg);
 
     let mut desired_string = String::from(
-        "/// description
+        "#[doc = \" documentation\"]
 ReadWrite register[32] RegisterName = 0x0 {
     ReadWrite field0[0..7],
     ReadOnly field1[8..15],
@@ -47,7 +47,7 @@ ReadWrite register[32] RegisterName = 0x0 {
 fn display_peripheral() {
     let reg = PeripheralDefinition {
         ident: Ident::from("PeripheralName"),
-        description: Some(String::from(" description")),
+        documentation: Some(String::from(" documentation")),
 
         registers: vec![
             RegisterSlot::Single{instance: RegisterInstance{ident: Ident::from("reg0"), ty: RegisterType::Single{path: Ident::from("RegisterName").into()}}, offset: 0x0},
@@ -67,7 +67,7 @@ fn display_peripheral() {
     let mut display_string = format!("{}", reg);
 
     let mut desired_string = String::from(
-        "/// description
+        "#[doc = \" documentation\"]
 peripheral PeripheralName {
     reg0: RegisterName @ 0x0,
     reg1: RegisterName @ 0x4,
@@ -93,7 +93,7 @@ peripheral PeripheralName {
 fn display_device() {
     let device = DeviceDefinition {
         ident: Ident::from("UnitName"),
-        description: Some(String::from(" description")),
+        documentation: Some(String::from(" documentation")),
 
         peripherals: vec![
             PeripheralInstance{ident: Ident::from("peripheral0"), path: Ident::from("PeripheralName").into(), address: 0x4000_0000,},
@@ -106,7 +106,7 @@ fn display_device() {
     let mut display_string = format!("{}", device);
 
     let mut desired_string = String::from(
-        "/// description
+        "#[doc = \" documentation\"]
 peripheral UnitName {
     peripheral0: PeripheralName @ 0x40000000,
     peripheral1: PeripheralName @ 0x40002000,

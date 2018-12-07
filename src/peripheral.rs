@@ -8,7 +8,7 @@ use crate::register::RegisterSlot;
 #[derive(Debug, PartialEq, Clone)]
 pub struct PeripheralDefinition {
     pub ident: Ident,
-    pub description: Option<String>,
+    pub documentation: Option<String>,
 
     pub registers: Vec<RegisterSlot>,
 }
@@ -23,8 +23,8 @@ pub struct PeripheralInstance {
 impl fmt::Display for PeripheralDefinition {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         // Print description if it exists
-        if let Some(ref description) = self.description {
-            writeln!(f, "///{}", description)?;
+        if let Some(ref documentation) = self.documentation {
+            writeln!(f, "#[doc = \"{}\"]", documentation)?;
         }
 
         write!(f, "peripheral {}", self.ident)?;

@@ -9,7 +9,7 @@ use crate::field::FieldInstance;
 pub struct RegisterDefinition {
     pub access: Access,
     pub ident: Ident,
-    pub description: Option<String>,
+    pub documentation: Option<String>,
 
     pub size: usize,
     pub reset_value: Option<u128>,
@@ -37,9 +37,9 @@ pub enum RegisterType {
 
 impl fmt::Display for RegisterDefinition {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // Print description if it exists
-        if let Some(ref description) = self.description {
-            writeln!(f, "///{}", description)?;
+        // Print documentation if it exists
+        if let Some(ref documentation) = self.documentation {
+            writeln!(f, "#[doc = \"{}\"]", documentation)?;
         }
 
         write!(f, "{} register[{}] {}", self.access, self.size, self.ident)?;
@@ -49,8 +49,8 @@ impl fmt::Display for RegisterDefinition {
 
         writeln!(f, " {{")?;
         for field in self.fields.iter() {
-            if let Some(ref description) = field.description {
-                writeln!(f, "///{}", description)?;
+            if let Some(ref documentation) = field.documentation {
+                writeln!(f, "///{}", documentation)?;
             }
             if let Some(ref access) = field.access {
                 write!(f, "{} ", access)?;
