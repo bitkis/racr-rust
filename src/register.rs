@@ -1,4 +1,5 @@
 use std::fmt;
+use crate::indent;
 
 use crate::ident::Ident;
 use crate::path::Path;
@@ -35,13 +36,14 @@ pub enum RegisterType {
     Array{path: Path, size: usize},
 }
 
-impl fmt::Display for RegisterDefinition {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // Print documentation if it exists
+impl RegisterDefinition {
+    pub(crate) fn write_indented<'a>(&self, f: &mut fmt::Formatter, indent_level: u32) -> fmt::Result {
+        // Print description if it exists
         if let Some(ref documentation) = self.documentation {
-            writeln!(f, "#[doc = \"{}\"]", documentation)?;
+            writeln!(f, "{}#[doc = \"{}\"]", indent::string(indent_level), documentation)?;
         }
 
+        write!(f, "{}", indent::string(indent_level))?;
         write!(f, "{} register[{}] {}", self.access, self.size, self.ident)?;
         if let Some(reset_value) = self.reset_value {
             write!(f, " = {:#x}", reset_value)?;
@@ -50,14 +52,22 @@ impl fmt::Display for RegisterDefinition {
         writeln!(f, " {{")?;
         for field in self.fields.iter() {
             if let Some(ref documentation) = field.documentation {
-                writeln!(f, "///{}", documentation)?;
+                write!(f, "{}", indent::string(indent_level+1))?;
+                writeln!(f, "#[doc = \"{}\"]", documentation)?;
             }
+            write!(f, "{}", indent::string(indent_level+1))?;
             if let Some(ref access) = field.access {
                 write!(f, "{} ", access)?;
             }
             writeln!(f, "{}[{}..{}],", field.ident, field.bit_start, field.bit_end)?;
         }
-        writeln!(f, "}}")
+        write!(f, "{}}}", indent::string(indent_level))
+    }
+}
+
+impl fmt::Display for RegisterDefinition {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        self.write_indented(f, 0)
     }
 }
 

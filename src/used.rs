@@ -1,4 +1,5 @@
 use std::fmt;
+use crate::indent;
 
 use crate::ident::Ident;
 
@@ -13,6 +14,27 @@ pub enum UseTree {
     Path{path_segment: Ident, sub_tree: Box<UseTree>},
 }
 
+impl Use {
+    pub(crate) fn write_indented<'a>(&self, f: &mut fmt::Formatter, indent_level: u32) -> fmt::Result {
+        write!(f, "{}", indent::string(indent_level))?;
+        write!(f, "use ")?;
+        self.tree.write_indented(f, indent_level)?;
+        write!(f, ";")
+    }
+}
+
+impl UseTree {
+    pub(crate) fn write_indented<'a>(&self, f: &mut fmt::Formatter, indent_level: u32) -> fmt::Result {
+        match self {
+            UseTree::Ident(x) => write!(f, "{}", x),
+            UseTree::Path{path_segment, sub_tree} => {
+                write!(f, "{}::", path_segment)?;
+                sub_tree.write_indented(f, indent_level)
+            },
+        }
+    }
+}
+
 impl From<Ident> for UseTree {
     fn from(i: Ident) -> UseTree {
         UseTree::Ident(i)
@@ -21,15 +43,6 @@ impl From<Ident> for UseTree {
 
 impl fmt::Display for Use {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "use {};", self.tree)
-    }
-}
-
-impl fmt::Display for UseTree {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            UseTree::Ident(x) => write!(f, "{}", x),
-            UseTree::Path{path_segment, sub_tree} => write!(f, "{}::{}", path_segment, sub_tree),
-        }
+        self.write_indented(f, 0)
     }
 }

@@ -12,6 +12,8 @@ mod ident;
 mod path;
 mod access;
 
+mod indent;
+
 pub use self::file::FileContent;
 
 pub use self::item::Item;

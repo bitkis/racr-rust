@@ -17,19 +17,17 @@ pub enum Item {
     Register(RegisterDefinition),
 }
 
-impl fmt::Display for Item {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl Item {
+    pub(crate) fn write_indented<'a>(&self, f: &mut fmt::Formatter, indent_level: u32) -> fmt::Result {
         match self {
-            Item::Use(x) => write!(f, "{}", x),
-            Item::Mod(x) => write!(f, "{}", x),
-            Item::Device(x) => write!(f, "{}", x),
-            Item::Peripheral(x) => write!(f, "{}", x),
-            Item::Register(x) => write!(f, "{}", x),
+            Item::Use(x) => x.write_indented(f, indent_level),
+            Item::Mod(x) => x.write_indented(f, indent_level),
+            Item::Device(x) => x.write_indented(f, indent_level),
+            Item::Peripheral(x) => x.write_indented(f, indent_level),
+            Item::Register(x) => x.write_indented(f, indent_level),
         }
     }
-}
 
-impl Item {
     pub fn is_use(&self) -> bool {
         if let Item::Use(_) = self {
             true
@@ -108,5 +106,11 @@ impl From<PeripheralDefinition> for Item {
 impl From<RegisterDefinition> for Item {
     fn from(item: RegisterDefinition) -> Item {
         Item::Register(item)
+    }
+}
+
+impl fmt::Display for Item {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        self.write_indented(f, 0)
     }
 }
