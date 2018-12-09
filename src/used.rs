@@ -11,6 +11,7 @@ pub struct Use {
 #[derive(Debug, PartialEq, Clone)]
 pub enum UseTree {
     Ident(Ident),
+    Rename{ident: Ident, rename: Ident},
     Path{path_segment: Ident, sub_tree: Box<UseTree>},
 }
 
@@ -27,6 +28,7 @@ impl UseTree {
     pub(crate) fn write_indented<'a>(&self, f: &mut fmt::Formatter, indent_level: u32) -> fmt::Result {
         match self {
             UseTree::Ident(x) => write!(f, "{}", x),
+            UseTree::Rename{ident, rename} => write!(f, "{} as {}", ident, rename),
             UseTree::Path{path_segment, sub_tree} => {
                 write!(f, "{}::", path_segment)?;
                 sub_tree.write_indented(f, indent_level)

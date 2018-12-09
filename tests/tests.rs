@@ -170,6 +170,30 @@ fn display_used() {
 }
 
 #[test]
+fn display_used_rename() {
+
+    let used = Use {
+        tree: UseTree::Path {
+            path_segment: "foo".into(),
+            sub_tree: Box::new(
+                UseTree::Rename {
+                    ident: "Bar".into(),
+                    rename: "Baz".into(),
+                }
+            )
+        }
+    };
+        
+    let display_string = format!("{}", used);
+    let desired_string = String::from("use foo::Bar as Baz;");
+
+    assert_eq!(
+        display_string,
+        desired_string
+    )
+}
+
+#[test]
 fn display_mod_without_content() {
     let module = Module {
         ident: "foo".into(),
