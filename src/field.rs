@@ -15,5 +15,6 @@ pub struct FieldInstance {
 #[derive(Debug, PartialEq, Clone)]
 pub struct FieldVariant {
     pub ident: Ident,
+    pub documentation: Option<String>,
     pub value: u128,
 }

@@ -73,6 +73,9 @@ impl RegisterDefinition {
                 if !field.variants.is_empty() {
                     writeln!(f, " {{")?;
                     for variant in field.variants.iter() {
+                        if let Some(ref doc) = variant.documentation {
+                            writeln!(f, "{}#[doc = \"{}\"]", indent::string(indent_level+2), doc)?;
+                        }
                         writeln!(f, "{}{} = {:#x},", indent::string(indent_level+2), variant.ident, variant.value)?;
                     }
                     write!(f, "{}}}", indent::string(indent_level+1))?;

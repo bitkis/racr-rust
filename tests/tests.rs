@@ -19,9 +19,9 @@ fn display_register() {
             FieldInstance{ident: Ident::from("field3"), documentation: None, bit_range: 24..29, variants: Vec::new(), access: None},
             FieldInstance{ident: Ident::from("field4"), documentation: None, bit_range: 29..30, variants: Vec::new(), access: None},
             FieldInstance{ident: Ident::from("field5"), documentation: None, bit_range: 30..32, access: None, variants: vec![
-                FieldVariant{ident: Ident::from("VARIANT0"), value: 0},
-                FieldVariant{ident: Ident::from("VARIANT1"), value: 1},
-                FieldVariant{ident: Ident::from("VARIANT2"), value: 2},
+                FieldVariant{ident: Ident::from("VARIANT0"), value: 0, documentation: Some(String::from("test doc"))},
+                FieldVariant{ident: Ident::from("VARIANT1"), value: 1, documentation: None},
+                FieldVariant{ident: Ident::from("VARIANT2"), value: 2, documentation: Some(String::from("test doc2"))},
             ]},
         ],
     };
@@ -36,8 +36,10 @@ ReadWrite register[32] RegisterName = 0x0 {
     field3[24..29],
     field4[29],
     field5[30..32] {
+        #[doc = \"test doc\"]
         VARIANT0 = 0x0,
         VARIANT1 = 0x1,
+        #[doc = \"test doc2\"]
         VARIANT2 = 0x2,
     },
 }"
