@@ -8,4 +8,11 @@ pub struct FieldInstance {
     pub bit_start: usize,
     pub bit_end: usize,
     pub access: Option<Access>,
+    pub variants: Vec<FieldVariant>,
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub struct FieldVariant {
+    pub ident: Ident,
+    pub value: u128,
 }

@@ -59,7 +59,18 @@ impl RegisterDefinition {
             if let Some(ref access) = field.access {
                 write!(f, "{} ", access)?;
             }
-            writeln!(f, "{}[{}..{}],", field.ident, field.bit_start, field.bit_end)?;
+            write!(f, "{}[{}..{}]", field.ident, field.bit_start, field.bit_end)?;
+
+            // Write out variants if they exists
+            if !field.variants.is_empty() {
+                writeln!(f, " {{")?;
+                for variant in field.variants.iter() {
+                    writeln!(f, "{}{} = {:#x},", indent::string(indent_level+2), variant.ident, variant.value)?;
+                }
+                write!(f, "{}}}", indent::string(indent_level+1))?;
+            }
+
+            writeln!(f, ",")?;
         }
         write!(f, "{}}}", indent::string(indent_level))
     }

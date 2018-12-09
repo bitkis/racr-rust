@@ -13,10 +13,15 @@ fn display_register() {
         reset_value: Some(0),
 
         fields: vec![
-            FieldInstance{ident: Ident::from("field0"), documentation: None, bit_start: 0, bit_end: 7, access: Some(Access::ReadWrite)},
-            FieldInstance{ident: Ident::from("field1"), documentation: None, bit_start: 8, bit_end: 15, access: Some(Access::ReadOnly)},
-            FieldInstance{ident: Ident::from("field2"), documentation: None, bit_start: 16, bit_end: 23, access: Some(Access::WriteOnly)},
-            FieldInstance{ident: Ident::from("field3"), documentation: None, bit_start: 24, bit_end: 31, access: None},
+            FieldInstance{ident: Ident::from("field0"), documentation: None, bit_start: 0, bit_end: 7, variants: Vec::new(), access: Some(Access::ReadWrite)},
+            FieldInstance{ident: Ident::from("field1"), documentation: None, bit_start: 8, bit_end: 15, variants: Vec::new(), access: Some(Access::ReadOnly)},
+            FieldInstance{ident: Ident::from("field2"), documentation: None, bit_start: 16, bit_end: 23, variants: Vec::new(), access: Some(Access::WriteOnly)},
+            FieldInstance{ident: Ident::from("field3"), documentation: None, bit_start: 24, bit_end: 29, variants: Vec::new(), access: None},
+            FieldInstance{ident: Ident::from("field4"), documentation: None, bit_start: 30, bit_end: 31, access: None, variants: vec![
+                FieldVariant{ident: Ident::from("VARIANT0"), value: 0},
+                FieldVariant{ident: Ident::from("VARIANT1"), value: 1},
+                FieldVariant{ident: Ident::from("VARIANT2"), value: 2},
+            ]},
         ],
     };
 
@@ -27,7 +32,12 @@ ReadWrite register[32] RegisterName = 0x0 {
     ReadWrite field0[0..7],
     ReadOnly field1[8..15],
     WriteOnly field2[16..23],
-    field3[24..31],
+    field3[24..29],
+    field4[30..31] {
+        VARIANT0 = 0x0,
+        VARIANT1 = 0x1,
+        VARIANT2 = 0x2,
+    },
 }"
     );
 

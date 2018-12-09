@@ -33,6 +33,7 @@ pub use self::register::RegisterInstance;
 pub use self::register::RegisterType;
 
 pub use self::field::FieldInstance;
+pub use self::field::FieldVariant;
 
 pub use self::ident::Ident;
 pub use self::path::Path;
