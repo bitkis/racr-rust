@@ -21,11 +21,11 @@ impl DeviceDefinition {
         }
 
         write!(f, "{}", indent::string(indent_level))?;
-        write!(f, "peripheral {}", self.ident)?;
+        write!(f, "device {}", self.ident)?;
         writeln!(f, " {{")?;
 
         for per in self.peripherals.iter() {
-            writeln!(f, "{}{}:  {} @ {:#x},", indent::string(indent_level+1), per.ident, per.path, per.address)?;
+            writeln!(f, "{}{}: {} @ {:#x},", indent::string(indent_level+1), per.ident, per.path, per.address)?;
         }
         write!(f, "{}", indent::string(indent_level))?;
         write!(f, "}}")

@@ -20,10 +20,9 @@ fn display_register() {
         ],
     };
 
-    let mut display_string = format!("{}", reg);
-
-    let mut desired_string = String::from(
-        "#[doc = \" documentation\"]
+    let display_string = format!("{}", reg);
+    let desired_string = String::from(
+"#[doc = \" documentation\"]
 ReadWrite register[32] RegisterName = 0x0 {
     ReadWrite field0[0..7],
     ReadOnly field1[8..15],
@@ -31,11 +30,6 @@ ReadWrite register[32] RegisterName = 0x0 {
     field3[24..31],
 }"
     );
-
-
-    // Strip whitespaces and compare
-    display_string.retain(|c| c!= '\n' && c != ' ');
-    desired_string.retain(|c| c!= '\n' && c != ' ');
 
     assert_eq!(
         display_string,
@@ -64,24 +58,18 @@ fn display_peripheral() {
         ],
     };
 
-    let mut display_string = format!("{}", reg);
-
-    let mut desired_string = String::from(
-        "#[doc = \" documentation\"]
+    let display_string = format!("{}", reg);
+    let desired_string = String::from(
+"#[doc = \" documentation\"]
 peripheral PeripheralName {
     reg0: RegisterName @ 0x0,
     reg1: RegisterName @ 0x4,
     reg2: RegisterName @ 0x8,
     reg3: RegisterName @ 0xc,
-    (reg4a: A | reg4b: B | reg4c: C) @ 0x10,
-    reg5: [RegisterName; 3]@ 0x14,
+    ( reg4a: A | reg4b: B | reg4c: C ) @ 0x10,
+    reg5: [RegisterName; 3] @ 0x14,
 }"
     );
-
-
-    // Strip whitespaces and compare
-    display_string.retain(|c| c!= '\n' && c != ' ');
-    desired_string.retain(|c| c!= '\n' && c != ' ');
 
     assert_eq!(
         display_string,
@@ -103,22 +91,16 @@ fn display_device() {
         ],
     };
 
-    let mut display_string = format!("{}", device);
-
-    let mut desired_string = String::from(
-        "#[doc = \" documentation\"]
-peripheral UnitName {
+    let display_string = format!("{}", device);
+    let desired_string = String::from(
+"#[doc = \" documentation\"]
+device UnitName {
     peripheral0: PeripheralName @ 0x40000000,
     peripheral1: PeripheralName @ 0x40002000,
     peripheral2: PeripheralName @ 0x40004000,
     peripheral3: PeripheralName @ 0x40008000,
 }"
     );
-
-
-    // Strip whitespaces and compare
-    display_string.retain(|c| c!= '\n' && c != ' ');
-    desired_string.retain(|c| c!= '\n' && c != ' ');
 
     assert_eq!(
         display_string,
@@ -141,13 +123,8 @@ fn display_used() {
         }
     };
         
-    let mut display_string = format!("{}", used);
-
-    let mut desired_string = String::from("use foo::bar::Baz;");
-
-    // Strip whitespaces and compare
-    display_string.retain(|c| c!= '\n' && c != ' ');
-    desired_string.retain(|c| c!= '\n' && c != ' ');
+    let display_string = format!("{}", used);
+    let desired_string = String::from("use foo::bar::Baz;");
 
     assert_eq!(
         display_string,
@@ -162,13 +139,8 @@ fn display_mod_without_content() {
         content: None,
     };
         
-    let mut display_string = format!("{}", module);
-
-    let mut desired_string = String::from("mod foo;");
-
-    // Strip whitespaces and compare
-    display_string.retain(|c| c!= '\n' && c != ' ');
-    desired_string.retain(|c| c!= '\n' && c != ' ');
+    let display_string = format!("{}", module);
+    let desired_string = String::from("mod foo;");
 
     assert_eq!(
         display_string,
@@ -186,13 +158,13 @@ fn display_mod_with_content() {
         ]),
     };
         
-    let mut display_string = format!("{}", module);
-
-    let mut desired_string = String::from("mod foo { use bar; use baz; }");
-
-    // Strip whitespaces and compare
-    display_string.retain(|c| c!= '\n' && c != ' ');
-    desired_string.retain(|c| c!= '\n' && c != ' ');
+    let display_string = format!("{}", module);
+    let desired_string = String::from(
+"mod foo {
+    use bar;
+    use baz;
+}"
+    );
 
     assert_eq!(
         display_string,
@@ -210,13 +182,13 @@ fn display_file() {
         ],
     };
         
-    let mut display_string = format!("{}", file_content);
-
-    let mut desired_string = String::from("use foo; use bar; use baz;");
-
-    // Strip whitespaces and compare
-    display_string.retain(|c| c!= '\n' && c != ' ');
-    desired_string.retain(|c| c!= '\n' && c != ' ');
+    let display_string = format!("{}", file_content);
+    let desired_string = String::from(
+"use foo;
+use bar;
+use baz;
+"
+    );
 
     assert_eq!(
         display_string,
@@ -235,7 +207,6 @@ fn display_path() {
     };
 
     let display_string = format!("{}", path);
-
     let desired_string = String::from("foo::bar::baz");
 
     // Compare
