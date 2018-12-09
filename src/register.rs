@@ -59,7 +59,12 @@ impl RegisterDefinition {
             if let Some(ref access) = field.access {
                 write!(f, "{} ", access)?;
             }
-            write!(f, "{}[{}..{}]", field.ident, field.bit_start, field.bit_end)?;
+
+            if field.bit_range.end == field.bit_range.start + 1 {
+                write!(f, "{}[{}]", field.ident, field.bit_range.start)?;
+            } else {
+                write!(f, "{}[{}..{}]", field.ident, field.bit_range.start, field.bit_range.end)?;
+            }
 
             // Write out variants if they exists
             if !field.variants.is_empty() {

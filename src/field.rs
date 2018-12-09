@@ -1,3 +1,5 @@
+use std::ops::Range;
+
 use crate::ident::Ident;
 use crate::access::Access;
 
@@ -5,8 +7,7 @@ use crate::access::Access;
 pub struct FieldInstance {
     pub ident: Ident,
     pub documentation: Option<String>,
-    pub bit_start: usize,
-    pub bit_end: usize,
+    pub bit_range: Range<usize>,
     pub access: Option<Access>,
     pub variants: Vec<FieldVariant>,
 }
