@@ -50,6 +50,31 @@ ReadWrite register[32] RegisterName = 0x0 {
 }
 
 #[test]
+fn display_register_empty() {
+    let reg = RegisterDefinition {
+        access: Access::ReadWrite,
+        ident: Ident::from("RegisterName"),
+        documentation: Some(String::from(" documentation")),
+
+        size: 32,
+        reset_value: Some(0),
+
+        fields: Vec::new()
+    };
+
+    let display_string = format!("{}", reg);
+    let desired_string = String::from(
+"#[doc = \" documentation\"]
+ReadWrite register[32] RegisterName = 0x0 {}"
+    );
+
+    assert_eq!(
+        display_string,
+        desired_string
+    )
+}
+
+#[test]
 fn display_peripheral() {
     let reg = PeripheralDefinition {
         ident: Ident::from("PeripheralName"),

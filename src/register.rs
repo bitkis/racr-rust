@@ -49,35 +49,39 @@ impl RegisterDefinition {
             write!(f, " = {:#x}", reset_value)?;
         }
 
-        writeln!(f, " {{")?;
-        for field in self.fields.iter() {
-            if let Some(ref documentation) = field.documentation {
-                write!(f, "{}", indent::string(indent_level+1))?;
-                writeln!(f, "#[doc = \"{}\"]", documentation)?;
-            }
-            write!(f, "{}", indent::string(indent_level+1))?;
-            if let Some(ref access) = field.access {
-                write!(f, "{} ", access)?;
-            }
-
-            if field.bit_range.end == field.bit_range.start + 1 {
-                write!(f, "{}[{}]", field.ident, field.bit_range.start)?;
-            } else {
-                write!(f, "{}[{}..{}]", field.ident, field.bit_range.start, field.bit_range.end)?;
-            }
-
-            // Write out variants if they exists
-            if !field.variants.is_empty() {
-                writeln!(f, " {{")?;
-                for variant in field.variants.iter() {
-                    writeln!(f, "{}{} = {:#x},", indent::string(indent_level+2), variant.ident, variant.value)?;
+        if self.fields.is_empty() {
+            write!(f, " {{}}")
+        } else {
+            writeln!(f, " {{")?;
+            for field in self.fields.iter() {
+                if let Some(ref documentation) = field.documentation {
+                    write!(f, "{}", indent::string(indent_level+1))?;
+                    writeln!(f, "#[doc = \"{}\"]", documentation)?;
                 }
-                write!(f, "{}}}", indent::string(indent_level+1))?;
-            }
+                write!(f, "{}", indent::string(indent_level+1))?;
+                if let Some(ref access) = field.access {
+                    write!(f, "{} ", access)?;
+                }
 
-            writeln!(f, ",")?;
+                if field.bit_range.end == field.bit_range.start + 1 {
+                    write!(f, "{}[{}]", field.ident, field.bit_range.start)?;
+                } else {
+                    write!(f, "{}[{}..{}]", field.ident, field.bit_range.start, field.bit_range.end)?;
+                }
+
+                // Write out variants if they exists
+                if !field.variants.is_empty() {
+                    writeln!(f, " {{")?;
+                    for variant in field.variants.iter() {
+                        writeln!(f, "{}{} = {:#x},", indent::string(indent_level+2), variant.ident, variant.value)?;
+                    }
+                    write!(f, "{}}}", indent::string(indent_level+1))?;
+                }
+
+                writeln!(f, ",")?;
+            }
+            write!(f, "{}}}", indent::string(indent_level))
         }
-        write!(f, "{}}}", indent::string(indent_level))
     }
 }
 
