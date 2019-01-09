@@ -29,10 +29,10 @@ fn display_register() {
     let display_string = format!("{}", reg);
     let desired_string = String::from(
 "#[doc = \" documentation\"]
-ReadWrite register[32] RegisterName = 0x0 {
-    ReadWrite field0[0..8],
-    ReadOnly field1[8..16],
-    WriteOnly field2[16..24],
+rw register[32] RegisterName = 0x0 {
+    rw field0[0..8],
+    ro field1[8..16],
+    wo field2[16..24],
     field3[24..29],
     field4[29],
     field5[30..32] {
@@ -67,7 +67,7 @@ fn display_register_empty() {
     let display_string = format!("{}", reg);
     let desired_string = String::from(
 "#[doc = \" documentation\"]
-ReadWrite register[32] RegisterName = 0x0 {}"
+rw register[32] RegisterName = 0x0 {}"
     );
 
     assert_eq!(
