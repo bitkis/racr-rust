@@ -54,33 +54,7 @@ impl RegisterDefinition {
         } else {
             writeln!(f, " {{")?;
             for field in self.fields.iter() {
-                if let Some(ref documentation) = field.documentation {
-                    write!(f, "{}", indent::string(indent_level+1))?;
-                    writeln!(f, "#[doc = \"{}\"]", documentation)?;
-                }
-                write!(f, "{}", indent::string(indent_level+1))?;
-                if let Some(ref access) = field.access {
-                    write!(f, "{} ", access)?;
-                }
-
-                if field.bit_range.end == field.bit_range.start + 1 {
-                    write!(f, "{}[{}]", field.ident, field.bit_range.start)?;
-                } else {
-                    write!(f, "{}[{}..{}]", field.ident, field.bit_range.start, field.bit_range.end)?;
-                }
-
-                // Write out variants if they exists
-                if !field.variants.is_empty() {
-                    writeln!(f, " {{")?;
-                    for variant in field.variants.iter() {
-                        if let Some(ref doc) = variant.documentation {
-                            writeln!(f, "{}#[doc = \"{}\"]", indent::string(indent_level+2), doc)?;
-                        }
-                        writeln!(f, "{}{} = {:#x},", indent::string(indent_level+2), variant.ident, variant.value)?;
-                    }
-                    write!(f, "{}}}", indent::string(indent_level+1))?;
-                }
-
+                field.write_indented(f, indent_level+1)?;
                 writeln!(f, ",")?;
             }
             write!(f, "{}}}", indent::string(indent_level))

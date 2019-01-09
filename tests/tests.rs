@@ -13,16 +13,18 @@ fn display_register() {
         reset_value: Some(0),
 
         fields: vec![
-            FieldInstance{ident: Ident::from("field0"), documentation: None, bit_range: 0..8, variants: Vec::new(), access: Some(Access::ReadWrite)},
-            FieldInstance{ident: Ident::from("field1"), documentation: None, bit_range: 8..16, variants: Vec::new(), access: Some(Access::ReadOnly)},
-            FieldInstance{ident: Ident::from("field2"), documentation: None, bit_range: 16..24, variants: Vec::new(), access: Some(Access::WriteOnly)},
-            FieldInstance{ident: Ident::from("field3"), documentation: None, bit_range: 24..29, variants: Vec::new(), access: None},
-            FieldInstance{ident: Ident::from("field4"), documentation: None, bit_range: 29..30, variants: Vec::new(), access: None},
-            FieldInstance{ident: Ident::from("field5"), documentation: None, bit_range: 30..32, access: None, variants: vec![
+            FieldInstance{access: Some(Access::ReadWrite), ty: FieldType::Field{ident: Ident::from("field0")}, documentation: None, bit_range: 0..8},
+            FieldInstance{access: Some(Access::ReadOnly), ty: FieldType::Field{ident: Ident::from("field1")}, documentation: None, bit_range: 8..16},
+            FieldInstance{access: Some(Access::WriteOnly), ty: FieldType::Field{ident: Ident::from("field2")}, documentation: None, bit_range: 16..24},
+            FieldInstance{access: None, ty: FieldType::Field{ident: Ident::from("field3")}, documentation: None, bit_range: 24..26},
+            FieldInstance{access: None, ty: FieldType::Reserved{value: 0x0}, documentation: None, bit_range: 26..27},
+            FieldInstance{access: None, ty: FieldType::Reserved{value: 0x2}, documentation: None, bit_range: 27..29},
+            FieldInstance{access: None, ty: FieldType::Field{ident: Ident::from("field4")}, documentation: None, bit_range: 29..30},
+            FieldInstance{access: None, documentation: None, bit_range: 30..32, ty: FieldType::Enum{ident: Ident::from("field5"), variants: vec![
                 FieldVariant{ident: Ident::from("VARIANT0"), value: 0, documentation: Some(String::from("test doc"))},
                 FieldVariant{ident: Ident::from("VARIANT1"), value: 1, documentation: None},
                 FieldVariant{ident: Ident::from("VARIANT2"), value: 2, documentation: Some(String::from("test doc2"))},
-            ]},
+            ]}},
         ],
     };
 
@@ -30,12 +32,14 @@ fn display_register() {
     let desired_string = String::from(
 "#[doc = \" documentation\"]
 rw register[32] RegisterName = 0x0 {
-    rw field0[0..8],
-    ro field1[8..16],
-    wo field2[16..24],
-    field3[24..29],
-    field4[29],
-    field5[30..32] {
+    rw field[0..8] field0,
+    ro field[8..16] field1,
+    wo field[16..24] field2,
+    field[24..26] field3,
+    reserved[26] = 0x0,
+    reserved[27..29] = 0x2,
+    field[29] field4,
+    enum[30..32] field5 {
         #[doc = \"test doc\"]
         VARIANT0 = 0x0,
         VARIANT1 = 0x1,
