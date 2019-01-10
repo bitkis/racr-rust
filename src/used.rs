@@ -3,11 +3,13 @@ use crate::indent;
 
 use crate::ident::Ident;
 
+/// A RACR `use` statement.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Use {
     pub tree: UseTree,
 }
 
+/// A node in a `UseTree`.
 #[derive(Debug, PartialEq, Clone)]
 pub enum UseTree {
     Ident(Ident),

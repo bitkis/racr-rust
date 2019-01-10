@@ -4,6 +4,7 @@ use crate::indent;
 use crate::item::Item;
 use crate::ident::Ident;
 
+/// A RACR Module declaration.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Module {
     pub ident: Ident,

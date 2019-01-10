@@ -5,6 +5,7 @@ use crate::ident::Ident;
 
 use crate::peripheral::PeripheralInstance;
 
+/// A RACR `device` definition.
 #[derive(Debug, PartialEq, Clone)]
 pub struct DeviceDefinition {
     pub ident: Ident,

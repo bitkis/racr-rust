@@ -2,6 +2,7 @@ use std::fmt;
 
 use crate::ident::Ident;
 
+/// A RACR path, one or more identifiers seperated by double colons (`::`).
 #[derive(Debug, PartialEq, Clone)]
 pub struct Path {
     pub segments: Vec<Ident>,

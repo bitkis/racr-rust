@@ -5,6 +5,7 @@ use crate::indent;
 use crate::ident::Ident;
 use crate::access::Access;
 
+/// An instantiation of a field inside a `register` definition.
 #[derive(Debug, PartialEq, Clone)]
 pub struct FieldInstance {
     pub documentation: Option<String>,
@@ -13,6 +14,7 @@ pub struct FieldInstance {
     pub ty: FieldType,
 }
 
+/// The type of a field insntatiation inside a `register` definition.
 #[derive(Debug, PartialEq, Clone)]
 pub enum FieldType {
     Field{ident: Ident},
@@ -20,6 +22,7 @@ pub enum FieldType {
     Enum{ident: Ident, variants: Vec<FieldVariant>},
 }
 
+/// A Variant for an `enum` field instantiation inside a `register` definition.
 #[derive(Debug, PartialEq, Clone)]
 pub struct FieldVariant {
     pub ident: Ident,

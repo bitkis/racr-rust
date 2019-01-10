@@ -1,3 +1,6 @@
+//! # RACR definitions for Rust
+//! This crate includes the required definitions to create AST for racr definitions.
+
 mod file;
 mod module;
 mod item;

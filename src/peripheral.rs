@@ -6,6 +6,7 @@ use crate::path::Path;
 
 use crate::register::RegisterSlot;
 
+/// A RACR `peripheral` definition.
 #[derive(Debug, PartialEq, Clone)]
 pub struct PeripheralDefinition {
     pub ident: Ident,
@@ -14,6 +15,7 @@ pub struct PeripheralDefinition {
     pub registers: Vec<RegisterSlot>,
 }
 
+/// An instantiation of a peripheral inside a `device` definition.
 #[derive(Debug, PartialEq, Clone)]
 pub struct PeripheralInstance {
     pub ident: Ident,

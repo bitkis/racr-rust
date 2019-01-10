@@ -6,6 +6,7 @@ use crate::path::Path;
 use crate::access::Access;
 use crate::field::FieldInstance;
 
+/// A RACR `register` definition.
 #[derive(Debug, PartialEq, Clone)]
 pub struct RegisterDefinition {
     pub access: Access,
@@ -18,18 +19,21 @@ pub struct RegisterDefinition {
     pub fields: Vec<FieldInstance>,
 }
 
+/// In a `device` definition, a "slot" can be populated by a single register or a union of registers.
 #[derive(Debug, PartialEq, Clone)]
 pub enum RegisterSlot {
     Single{instance: RegisterInstance, offset: usize},
     Union{alternatives: Vec<RegisterInstance>, offset: usize},
 }
 
+/// An instantiation of a `register` inside a `peripheral` definition.
 #[derive(Debug, PartialEq, Clone)]
 pub struct RegisterInstance {
     pub ident: Ident, 
     pub ty: RegisterType,
 }
 
+/// A register kind of type.
 #[derive(Debug, PartialEq, Clone)]
 pub enum RegisterType {
     Single{path: Path},

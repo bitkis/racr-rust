@@ -8,6 +8,7 @@ use crate::{
     RegisterDefinition,
 };
 
+/// One of the possible RACR items: definition, use-statement or mod-declaration.
 #[derive(Debug, PartialEq, Clone)]
 pub enum Item {
     Use(Use),
