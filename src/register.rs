@@ -75,24 +75,18 @@ impl fmt::Display for RegisterDefinition {
 impl fmt::Display for RegisterSlot {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            RegisterSlot::Single{instance, offset} => write!(f, "{} @ {:#x}", instance, offset),
+            RegisterSlot::Single{instance, offset} => write!(f, "{}: {} @ {:#x}", instance.ident, instance.ty, offset),
             RegisterSlot::Union{alternatives, offset} => {
                 write!(f, "( ")?;
                 for (i, alternative) in alternatives.iter().enumerate() {
                     if i != 0 {
                         write!(f, " | ")?;
                     }
-                    write!(f, "{}", alternative)?;
+                    write!(f, "{}: {}", alternative.ident, alternative.ty)?;
                 }
                 write!(f, " ) @ {:#x}", offset)
             },
         }
-    }
-}
-
-impl fmt::Display for RegisterInstance {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}: {}", self.ident, self.ty)
     }
 }
 
