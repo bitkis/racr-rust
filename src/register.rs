@@ -21,7 +21,7 @@ pub struct RegisterDefinition {
 #[derive(Debug, PartialEq, Clone)]
 pub enum RegisterSlot {
     Single{instance: RegisterInstance, offset: usize},
-    Overloaded{alternatives: Vec<RegisterInstance>, offset: usize},
+    Union{alternatives: Vec<RegisterInstance>, offset: usize},
 }
 
 #[derive(Debug, PartialEq, Clone)]
@@ -72,7 +72,7 @@ impl fmt::Display for RegisterSlot {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             RegisterSlot::Single{instance, offset} => write!(f, "{} @ {:#x}", instance, offset),
-            RegisterSlot::Overloaded{alternatives, offset} => {
+            RegisterSlot::Union{alternatives, offset} => {
                 write!(f, "( ")?;
                 for (i, alternative) in alternatives.iter().enumerate() {
                     if i != 0 {
