@@ -1,7 +1,7 @@
 use std::fmt;
 
 /// A valid RACR identifier.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Hash)]
 pub struct Ident(String);
 
 // TODO: Change to TryFrom and validate invariants
